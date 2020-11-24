@@ -34,6 +34,7 @@ AVRCommunicator::AVRCommunicator(QObject *parent) :
     m_receiverHost(""),
     m_port(0),
     m_volume(0),
+    m_volumeMax(30),
     m_mute(false),
     m_input(Unknown),
     m_connected(false),
@@ -115,10 +116,7 @@ void AVRCommunicator::socketDisconnected()
  */
 void AVRCommunicator::socketConnected()
 {
-//    this->sendMessage("?F\r\n");
-//    this->sendMessage("?P\r\n");
-//    this->sendMessage("?V\r\n");
-//    this->sendMessage("?M\r\n");
+    this->initializeConnection();
     this->setConnected(true);
 }
 
@@ -132,6 +130,7 @@ void AVRCommunicator::newDataAvailable()
     if(msg == "R") { return; }
     DEBUG << "Message received";
     DEBUG << msg;
+    emit responseReceived(msg);
     QStringList spaceSplit = msg.split(" ");
     QString value = "";
     if(msg.startsWith(RESPONSE_INPUT))

@@ -11,7 +11,8 @@ class AVRCommunicator : public QObject
     Q_ENUMS(Input)
     Q_PROPERTY(QString receiverHost READ receiverHost WRITE setReceiverHost NOTIFY receiverHostChanged)
     Q_PROPERTY(int port READ port WRITE setPort NOTIFY portChanged)
-    Q_PROPERTY(int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(double volume READ volume WRITE setVolume NOTIFY volumeChanged)
+    Q_PROPERTY(double volumeMax READ volumeMax WRITE setVolumeMax NOTIFY volumeMaxChanged)
     Q_PROPERTY(bool mute READ mute WRITE setMute NOTIFY muteChanged)
     Q_PROPERTY(Input input READ input WRITE setInput NOTIFY inputChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
@@ -66,7 +67,7 @@ public:
         return m_port;
     }
 
-    int volume() const
+    double volume() const
     {
         return m_volume;
     }
@@ -96,13 +97,18 @@ public:
         return m_airplayNowPlayingInformation;
     }
 
+    double volumeMax() const
+    {
+        return m_volumeMax;
+    }
+
 private:
     QTcpSocket *m_socket;
     QString m_receiverHost;
 
     int m_port;
 
-    int m_volume;
+    double m_volume;
 
     bool m_mute;
 
@@ -114,13 +120,15 @@ private:
 
     QStringList m_airplayNowPlayingInformation;
 
+    double m_volumeMax;
+
 signals:
 
     void receiverHostChanged(QString arg);
 
     void portChanged(int arg);
 
-    void volumeChanged(int arg);
+    void volumeChanged(double arg);
 
     void muteChanged(bool arg);
 
@@ -136,6 +144,11 @@ signals:
 
     void messageSending();
     void messageReceived();
+
+    void responseReceived(QString message);
+    void initializeConnection();
+
+    void volumeMaxChanged(double volumeMax);
 
 public slots:
     void sendMessage(QString);
@@ -163,7 +176,7 @@ public slots:
     void socketConnected();
 
 
-    void setVolume(int arg)
+    void setVolume(double arg)
     {
         if (m_volume != arg) {
             m_volume = arg;
@@ -197,5 +210,14 @@ public slots:
             m_poweredOn = arg;
             emit poweredOnChanged(arg);
         }
+    }
+    void setVolumeMax(double volumeMax)
+    {
+        qWarning("Floating point comparison needs context sanity check");
+        if (qFuzzyCompare(m_volumeMax, volumeMax))
+            return;
+
+        m_volumeMax = volumeMax;
+        emit volumeMaxChanged(m_volumeMax);
     }
 };

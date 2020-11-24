@@ -31,12 +31,15 @@ Rectangle {
         }
         property bool waitingForVolumeChange : false
         onVolumeChanged: {
-            console.log("onVolumeChanged - " + volume)
+            console.log("onVolumeChanged - " + volume);
             if(waitingForVolumeChange)
             {
                 //_Toaster.bruteToast("Volume changed to " + volume, "volumeToast")
                 waitingForVolumeChange = false
             }
+        }
+        onVolumeMaxChanged: {
+            console.log("onVolumeMaxChanged - " + volumeMax);
         }
         onMuteChanged: {
             console.log("onMuteChanged - " + mute);
@@ -74,16 +77,30 @@ Rectangle {
             _Toaster.toast("Failed to send message to receiver")
         }
         onMessageSending: {
-            _PlatformiOS.networkActivityIndicator = true
+            try { _PlatformiOS.networkActivityIndicator = true } catch (ex) { }
         }
         onMessageReceived: {
-            _PlatformiOS.networkActivityIndicator = false
+            try { _PlatformiOS.networkActivityIndicator = false } catch (ex) { }
         }
+    }
+
+    property var activeAVR: _loaderDenonAVR.item
+
+    Loader {
+        id: _loaderPioneerAVR
+        active: true
+        sourceComponent: PioneerAVR { }
+    }
+
+    Loader {
+        id: _loaderDenonAVR
+        active: false
+        sourceComponent: DenonAVR { }
     }
 
     Views.Header {
         id: _Header
-        title: "Pi-O-Neer Remote"
+        title: "Better AVR Remote"
         attachTo: _Flickable
         darkTheme: root.darkTheme
         Views.HeaderButton {
@@ -93,37 +110,34 @@ Rectangle {
             onClicked: _SettingsSheet.open();
         }
     }
+
     Flickable {
         id: _Flickable
         anchors.fill: parent
         contentWidth: width
         contentHeight: _Column.height
         interactive: (contentHeight > height)
+
         Column {
             id: _Column
             width: parent.width
             height: childrenRect.height
+
             Item {
                 width: parent.width
                 height: 30 + _Header.height
             }
+
             Views.FlatButton {
                 id: _FlatButton_Power
                 label: "Power"
                 backgroundColor: "#419bdb"
                 backgroundPressedColor: "#3183bd"
                 onClicked: {
-                    if(!_AVR.poweredOn)
-                    {
-                        _AVR.sendMessage("PO\r\n");
-                        _AVR.poweredOn = true;
-                    } else
-                    {
-                        _AVR.sendMessage("PF\r\n");
-                        _AVR.poweredOn = false;
-                    }
+                    activeAVR.powerToggle();
                 }
             }
+
             Views.FlatButton {
                 id: _FlatButton_Input
                 label: "Input Mode"
@@ -135,6 +149,7 @@ Rectangle {
                     _AVR.sendMessage("?FR\r\n");
                     _InputModeSheet.open();
                 }
+
                 Views.FlatSubButton {
                     iconSource: "img/arrow-left.png"
                     state: "left"
@@ -143,6 +158,7 @@ Rectangle {
                         _AVR.inputCycle(true);
                     }
                 }
+
                 Views.FlatSubButton {
                     iconSource: "img/arrow-right.png"
                     state: "right"
@@ -152,6 +168,7 @@ Rectangle {
                     }
                 }
             }
+
             Views.FlatButton {
                 id: _FlatButton_InputDetails
                 backgroundColor: "#efeff4"
@@ -334,14 +351,7 @@ Rectangle {
                 backgroundColor: "#364a5e"
                 backgroundPressedColor: "#416a92"
                 onClicked: {
-                    if(!_AVR.mute)
-                    {
-                        _AVR.sendMessage("MO\r\n");
-                    }
-                    else
-                    {
-                        _AVR.sendMessage("MF\r\n");
-                    }
+                    activeAVR.muteToggle();
                 }
                 Image {
                     id: _Image_VolumeIcon
@@ -356,14 +366,14 @@ Rectangle {
                             }
                         },
                         State {
-                            when: _AVR.volume <= 20
+                            when: _AVR.volume <= (1*_AVR.volumeMax/3)
                             PropertyChanges {
                                 target: _Image_VolumeIcon
                                 source: "img/icon-volume-min.png"
                             }
                         },
                         State {
-                            when: _AVR.volume <= 30
+                            when: _AVR.volume <= (2*_AVR.volumeMax/3)
                             PropertyChanges {
                                 target: _Image_VolumeIcon
                                 source: "img/icon-volume-mid.png"
@@ -376,18 +386,14 @@ Rectangle {
                     iconSource: "img/volume-down.png"
                     state: "left"
                     onClicked: {
-                        // Send the volume down command
-                        _AVR.waitingForVolumeChange = true
-                        _AVR.sendMessage("VD\r\n");
+                        activeAVR.volumeDown();
                     }
                 }
                 Views.FlatSubButton {
                     iconSource: "img/volume-up.png"
                     state: "right"
                     onClicked: {
-                        // Send the volume up command
-                        _AVR.waitingForVolumeChange = true
-                        _AVR.sendMessage("VU\r\n");
+                        activeAVR.volumeUp();
                     }
                 }
             }
