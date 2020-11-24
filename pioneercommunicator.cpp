@@ -27,6 +27,7 @@
 
 PioneerCommunicator::PioneerCommunicator(QObject *parent) :
     QObject(parent),
+    m_socket(nullptr),
     m_receiverHost(""),
     m_port(0),
     m_volume(0),
@@ -76,7 +77,7 @@ void PioneerCommunicator::connectToReceiver()
         return;
     }
     DEBUG << "attempting to connect to" << m_receiverHost;
-    if(m_socket)
+    if(m_socket != nullptr)
     {
         m_socket->disconnectFromHost();
         m_socket->deleteLater();
