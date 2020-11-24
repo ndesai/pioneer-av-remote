@@ -115,21 +115,21 @@ private:
 
 signals:
 
-void receiverHostChanged(QString arg);
+    void receiverHostChanged(QString arg);
 
-void portChanged(int arg);
+    void portChanged(int arg);
 
-void volumeChanged(int arg);
+    void volumeChanged(int arg);
 
-void muteChanged(bool arg);
+    void muteChanged(bool arg);
 
-void inputChanged(Input arg);
+    void inputChanged(Input arg);
 
-void connectedChanged(bool arg);
+    void connectedChanged(bool arg);
 
-void poweredOnChanged(bool arg);
+    void poweredOnChanged(bool arg);
 
-void airplayNowPlayingInformationChanged(QStringList arg);
+    void airplayNowPlayingInformationChanged(QStringList arg);
 
     void failedToSendMessage(QString message);
 
