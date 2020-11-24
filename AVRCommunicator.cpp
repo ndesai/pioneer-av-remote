@@ -1,4 +1,4 @@
-#include "pioneercommunicator.h"
+#include "AVRCommunicator.h"
 #include <QDebug>
 #define Timeout 5000
 #define RESPONSE_POWER "PWR"
@@ -24,8 +24,11 @@
 #define RESPONSE_AIRPLAYDATA "GCP"
 // TODO
 
-
-PioneerCommunicator::PioneerCommunicator(QObject *parent) :
+/**
+ * @brief AVRCommunicator::AVRCommunicator
+ * @param parent
+ */
+AVRCommunicator::AVRCommunicator(QObject *parent) :
     QObject(parent),
     m_socket(nullptr),
     m_receiverHost(""),
@@ -51,7 +54,11 @@ PioneerCommunicator::PioneerCommunicator(QObject *parent) :
     }
 }
 
-void PioneerCommunicator::inputCycle(bool reverse)
+/**
+ * @brief AVRCommunicator::inputCycle
+ * @param reverse
+ */
+void AVRCommunicator::inputCycle(bool reverse)
 {
     if(!reverse)
     {
@@ -63,8 +70,10 @@ void PioneerCommunicator::inputCycle(bool reverse)
     }
 }
 
-
-void PioneerCommunicator::connectToReceiver()
+/**
+ * @brief AVRCommunicator::connectToReceiver
+ */
+void AVRCommunicator::connectToReceiver()
 {
     if(m_receiverHost.isEmpty())
     {
@@ -92,22 +101,31 @@ void PioneerCommunicator::connectToReceiver()
     m_socket->connectToHost(m_receiverHost, m_port);
 }
 
-void PioneerCommunicator::socketDisconnected()
+/**
+ * @brief AVRCommunicator::socketDisconnected
+ */
+void AVRCommunicator::socketDisconnected()
 {
     this->setConnected(false);
     this->connectToReceiver();
 }
 
-void PioneerCommunicator::socketConnected()
+/**
+ * @brief AVRCommunicator::socketConnected
+ */
+void AVRCommunicator::socketConnected()
 {
-    this->sendMessage("?F\r\n");
-    this->sendMessage("?P\r\n");
-    this->sendMessage("?V\r\n");
-    this->sendMessage("?M\r\n");
+//    this->sendMessage("?F\r\n");
+//    this->sendMessage("?P\r\n");
+//    this->sendMessage("?V\r\n");
+//    this->sendMessage("?M\r\n");
     this->setConnected(true);
 }
 
-void PioneerCommunicator::newDataAvailable()
+/**
+ * @brief AVRCommunicator::newDataAvailable
+ */
+void AVRCommunicator::newDataAvailable()
 {
     emit messageReceived();
     QString msg = QString(m_socket->readAll()).simplified();
@@ -157,7 +175,11 @@ void PioneerCommunicator::newDataAvailable()
     }
 }
 
-void PioneerCommunicator::sendMessage(QString str)
+/**
+ * @brief AVRCommunicator::sendMessage
+ * @param str
+ */
+void AVRCommunicator::sendMessage(QString str)
 {
     emit messageSending();
     if (!m_socket || !m_socket->waitForConnected(Timeout)) {

@@ -24,8 +24,8 @@ Rectangle {
         applicationIconBadgeNumber: _PC.volume
     }
 
-    AppStreet.PioneerCommunicator {
-        id: _PC
+    AppStreet.AVRCommunicator {
+        id: _AVR
         onInputChanged: {
             console.log("onInputChanged - " + input);
         }
@@ -113,14 +113,14 @@ Rectangle {
                 backgroundColor: "#419bdb"
                 backgroundPressedColor: "#3183bd"
                 onClicked: {
-                    if(!_PC.poweredOn)
+                    if(!_AVR.poweredOn)
                     {
-                        _PC.sendMessage("PO\r\n");
-                        _PC.poweredOn = true;
+                        _AVR.sendMessage("PO\r\n");
+                        _AVR.poweredOn = true;
                     } else
                     {
-                        _PC.sendMessage("PF\r\n");
-                        _PC.poweredOn = false;
+                        _AVR.sendMessage("PF\r\n");
+                        _AVR.poweredOn = false;
                     }
                 }
             }
@@ -130,9 +130,9 @@ Rectangle {
                 backgroundColor: "#3bcb73"
                 backgroundPressedColor: "#34b968"
                 onClicked: {
-                    //                    _PC.sendMessage("?F\r\n");
-                    //                    _PC.sendMessage("?GAP\r\n");
-                    _PC.sendMessage("?FR\r\n");
+                    //                    _AVR.sendMessage("?F\r\n");
+                    //                    _AVR.sendMessage("?GAP\r\n");
+                    _AVR.sendMessage("?FR\r\n");
                     _InputModeSheet.open();
                 }
                 Views.FlatSubButton {
@@ -140,7 +140,7 @@ Rectangle {
                     state: "left"
                     onClicked: {
                         // Cycle in reverse
-                        _PC.inputCycle(true);
+                        _AVR.inputCycle(true);
                     }
                 }
                 Views.FlatSubButton {
@@ -148,7 +148,7 @@ Rectangle {
                     state: "right"
                     onClicked: {
                         // Cycle in standard direction
-                        _PC.inputCycle(false);
+                        _AVR.inputCycle(false);
                     }
                 }
             }
@@ -204,123 +204,123 @@ Rectangle {
                 }
                 states: [
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.AIRPLAY
+                        when: _AVR.input == AppStreet.AVRCommunicator.AIRPLAY
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Airplay"
                         }
                         PropertyChanges {
                             target: _Label_InputDetails
-                            text: _PC.airplay_albumDetails
+                            text: _AVR.airplay_albumDetails
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.SATCBL
+                        when: _AVR.input == AppStreet.AVRCommunicator.SATCBL
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Satellite / Cable Box"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.DVD
+                        when: _AVR.input == AppStreet.AVRCommunicator.DVD
                         PropertyChanges {
                             target: _Label_InputName
                             text: "DVD"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.BD
+                        when: _AVR.input == AppStreet.AVRCommunicator.BD
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Blu-Ray Drive"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.ADAPTERPORT
+                        when: _AVR.input == AppStreet.AVRCommunicator.ADAPTERPORT
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Adapter"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.TUNER
+                        when: _AVR.input == AppStreet.AVRCommunicator.TUNER
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Tuner"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.CD
+                        when: _AVR.input == AppStreet.AVRCommunicator.CD
                         PropertyChanges {
                             target: _Label_InputName
                             text: "CD"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.TVSAT
+                        when: _AVR.input == AppStreet.AVRCommunicator.TVSAT
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Television / Satellite"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.IPODUSB
+                        when: _AVR.input == AppStreet.AVRCommunicator.IPODUSB
                         PropertyChanges {
                             target: _Label_InputName
                             text: "iPod / USB"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.IPODUSB
+                        when: _AVR.input == AppStreet.AVRCommunicator.IPODUSB
                         PropertyChanges {
                             target: _Label_InputName
                             text: "iPod / USB"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.FAVORITE
+                        when: _AVR.input == AppStreet.AVRCommunicator.FAVORITE
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Favorites"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.MEDIASERVER
+                        when: _AVR.input == AppStreet.AVRCommunicator.MEDIASERVER
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Media Server"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.PANDORA
+                        when: _AVR.input == AppStreet.AVRCommunicator.PANDORA
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Pandora"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.NETRADIO
+                        when: _AVR.input == AppStreet.AVRCommunicator.NETRADIO
                         PropertyChanges {
                             target: _Label_InputName
                             text: "NetRadio"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.GAME
+                        when: _AVR.input == AppStreet.AVRCommunicator.GAME
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Game"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.VIDEO
+                        when: _AVR.input == AppStreet.AVRCommunicator.VIDEO
                         PropertyChanges {
                             target: _Label_InputName
                             text: "Video"
                         }
                     },
                     State {
-                        when: _PC.input == AppStreet.PioneerCommunicator.DVRBDR
+                        when: _AVR.input == AppStreet.AVRCommunicator.DVRBDR
                         PropertyChanges {
                             target: _Label_InputName
                             text: "DVR / BDR"
@@ -334,13 +334,13 @@ Rectangle {
                 backgroundColor: "#364a5e"
                 backgroundPressedColor: "#416a92"
                 onClicked: {
-                    if(!_PC.mute)
+                    if(!_AVR.mute)
                     {
-                        _PC.sendMessage("MO\r\n");
+                        _AVR.sendMessage("MO\r\n");
                     }
                     else
                     {
-                        _PC.sendMessage("MF\r\n");
+                        _AVR.sendMessage("MF\r\n");
                     }
                 }
                 Image {
@@ -349,21 +349,21 @@ Rectangle {
                     source: "img/icon-volume-max.png"
                     states: [
                         State {
-                            when: _PC.mute
+                            when: _AVR.mute
                             PropertyChanges {
                                 target: _Image_VolumeIcon
                                 source: "img/icon-volume-mute.png"
                             }
                         },
                         State {
-                            when: _PC.volume <= 20
+                            when: _AVR.volume <= 20
                             PropertyChanges {
                                 target: _Image_VolumeIcon
                                 source: "img/icon-volume-min.png"
                             }
                         },
                         State {
-                            when: _PC.volume <= 30
+                            when: _AVR.volume <= 30
                             PropertyChanges {
                                 target: _Image_VolumeIcon
                                 source: "img/icon-volume-mid.png"
@@ -377,8 +377,8 @@ Rectangle {
                     state: "left"
                     onClicked: {
                         // Send the volume down command
-                        _PC.waitingForVolumeChange = true
-                        _PC.sendMessage("VD\r\n");
+                        _AVR.waitingForVolumeChange = true
+                        _AVR.sendMessage("VD\r\n");
                     }
                 }
                 Views.FlatSubButton {
@@ -386,8 +386,8 @@ Rectangle {
                     state: "right"
                     onClicked: {
                         // Send the volume up command
-                        _PC.waitingForVolumeChange = true
-                        _PC.sendMessage("VU\r\n");
+                        _AVR.waitingForVolumeChange = true
+                        _AVR.sendMessage("VU\r\n");
                     }
                 }
             }
@@ -434,84 +434,84 @@ Rectangle {
 
         property variant dataModel : [
             {
-                "identifier": AppStreet.PioneerCommunicator.AIRPLAY,
+                "identifier": AppStreet.AVRCommunicator.AIRPLAY,
                 "code" : "AP",
                 "label": "Airplay",
                 "canSet" : false
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.SATCBL,
+                "identifier": AppStreet.AVRCommunicator.SATCBL,
                 "code" : "SATCBL",
                 "label":  "Satellite / Cable Box"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.DVD,
+                "identifier": AppStreet.AVRCommunicator.DVD,
                 "code" : "DVD",
                 "label":  "DVD"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.BD,
+                "identifier": AppStreet.AVRCommunicator.BD,
                 "code" : "BD",
                 "label":  "Blu-Ray Drive"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.ADAPTERPORT,
+                "identifier": AppStreet.AVRCommunicator.ADAPTERPORT,
                 "code" : "AD.PORT",
                 "label": "Adapter"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.TUNER,
+                "identifier": AppStreet.AVRCommunicator.TUNER,
                 "code" : "TUNER",
                 "label":  "Radio Tuner"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.CD,
+                "identifier": AppStreet.AVRCommunicator.CD,
                 "code" : "CD",
                 "label":  "Compact Disc"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.TVSAT,
+                "identifier": AppStreet.AVRCommunicator.TVSAT,
                 "code" : "TVSAT",
                 "label":  "Television / Satellite"
             },
 
             {
-                "identifier": AppStreet.PioneerCommunicator.IPODUSB,
+                "identifier": AppStreet.AVRCommunicator.IPODUSB,
                 "code" : "IPOD",
                 "label":  "iPod / USB"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.FAVORITE,
+                "identifier": AppStreet.AVRCommunicator.FAVORITE,
                 "code" : "FAV",
                 "label":  "Favorites"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.MEDIASERVER,
+                "identifier": AppStreet.AVRCommunicator.MEDIASERVER,
                 "code" : "M.SERVER",
                 "label":  "Media Server"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.PANDORA,
+                "identifier": AppStreet.AVRCommunicator.PANDORA,
                 "code" : "PANDORA",
                 "label":  "Pandora"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.NETRADIO,
+                "identifier": AppStreet.AVRCommunicator.NETRADIO,
                 "code" : "NET",
                 "label":  "NetRadio"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.GAME,
+                "identifier": AppStreet.AVRCommunicator.GAME,
                 "code" : "GAME",
                 "label":  "Game"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.VIDEO,
+                "identifier": AppStreet.AVRCommunicator.VIDEO,
                 "code" : "VIDEO",
                 "label":  "Video"
             },
             {
-                "identifier": AppStreet.PioneerCommunicator.DVRBDR,
+                "identifier": AppStreet.AVRCommunicator.DVRBDR,
                 "code" : "DVRBDR",
                 "label":  "DVR / BDR"
             }
@@ -536,11 +536,11 @@ Rectangle {
             })
             _PS.getValue("receiverHost", function(value) {
                 Log.notice(root, "setting receiver host to " + value);
-                _PC.receiverHost = value
+                _AVR.receiverHost = value
             })
             _PS.getValue("receiverPort", function(value) {
                 Log.notice(root, "setting receiver port to " + value);
-                _PC.port = parseInt(value, 10)
+                _AVR.port = parseInt(value, 10)
             })
         }
     }

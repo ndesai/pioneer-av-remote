@@ -21,7 +21,7 @@ Item {
         id: _Timer_ShowStatusBar
         interval: 250; running: false; repeat: false;
         onTriggered: {
-            _PlatformiOS.statusBarVisible = true
+            try { _PlatformiOS.statusBarVisible = true; } catch (ex) { }
         }
     }
 
@@ -40,7 +40,7 @@ Item {
 
     function toast(message, delay, tag)
     {
-        _PlatformiOS.statusBarVisible = false
+        try { _PlatformiOS.statusBarVisible = false; } catch (ex) { }
         if(!message) return;
         var d; if(!delay) d = 1; else d = delay;
 

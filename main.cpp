@@ -1,6 +1,6 @@
 #include <QtGui/QGuiApplication>
 #include "qtquick2applicationviewer.h"
-#include "pioneercommunicator.h"
+#include "AVRCommunicator.h"
 #include <QtQml>
 #include <QQmlContext>
 #include "dbmodel.h"
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     QtQuick2ApplicationViewer viewer;
-    qmlRegisterType<PioneerCommunicator>("st.app", 1, 0, "PioneerCommunicator");
+    qmlRegisterType<AVRCommunicator>("st.app", 1, 0, "AVRCommunicator");
     qmlRegisterType<DbModel>("st.app", 1, 0, "DbModel");
     qmlRegisterType<PlatformiOS>("st.app", 1, 0, "PlatformiOS");
     bool isiOs = false;

@@ -49,7 +49,7 @@ Sheet {
                     var i = ""+dataObject.identifier+"";
                     if(i.length == 1)
                         i = "0" + "" + i
-                    _PC.sendMessage(i+"FN\r\n");
+                    _AVR.sendMessage(i+"FN\r\n");
                     _Toaster.toast("Set input to " + dataObject.label)
                 }
 
@@ -113,7 +113,7 @@ Sheet {
                         },
                         State {
                             name: "active"
-                            when: model.identifier === _PC.input
+                            when: model.identifier === _AVR.input
                             PropertyChanges {
                                 target: _Label_CodeName
                                 color: "#ffffff"

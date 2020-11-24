@@ -1,10 +1,11 @@
-#ifndef PIONEERCOMMUNICATOR_H
-#define PIONEERCOMMUNICATOR_H
+#pragma once
+
 #include <QObject>
 #include <QtNetwork>
 #include <QtCore/qmath.h>
 #include "definition.h"
-class PioneerCommunicator : public QObject
+
+class AVRCommunicator : public QObject
 {
     Q_OBJECT
     Q_ENUMS(Input)
@@ -18,7 +19,7 @@ class PioneerCommunicator : public QObject
     Q_PROPERTY(QStringList airplayNowPlayingInformation READ airplayNowPlayingInformation NOTIFY airplayNowPlayingInformationChanged)
 
 public:
-    explicit PioneerCommunicator(QObject *parent = 0);
+    explicit AVRCommunicator(QObject *parent = 0);
     enum Input {
         Unknown = -1,
         DVD = 4,
@@ -198,5 +199,3 @@ public slots:
         }
     }
 };
-
-#endif // PIONEERCOMMUNICATOR_H

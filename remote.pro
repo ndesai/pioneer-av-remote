@@ -12,7 +12,7 @@ QTPLUGIN += qsqlite
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    pioneercommunicator.cpp \
+    AVRCommunicator.cpp \
     dbmodel.cpp \
     dbthread.cpp
 
@@ -24,7 +24,7 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    pioneercommunicator.h \
+    AVRCommunicator.h \
     dbmodel.h \
     dbthread.h \
     definition.h \

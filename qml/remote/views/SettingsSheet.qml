@@ -34,12 +34,12 @@ Sheet {
                         {
                             _PS.insert("receiverHost", _TextField.text, function(ret) {
                                 _Toaster.toast("Successfully updated receiver settings")
-                                _PC.receiverHost = _TextField.text
+                                _AVR.receiverHost = _TextField.text
 
                                 if(_Rectangle_OptionBox.originalValue !== _Rectangle_OptionBox.dataValue)
                                 {
                                     _PS.insert("receiverPort", _Rectangle_OptionBox.dataValue, function(ret) {
-                                        _PC.port = parseInt(_Rectangle_OptionBox.dataValue, 10)
+                                        _AVR.port = parseInt(_Rectangle_OptionBox.dataValue, 10)
                                         root.close();
                                     })
                                 } else
